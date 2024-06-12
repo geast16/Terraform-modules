@@ -86,7 +86,7 @@ resource "aws_internet_gateway" "internet_gateway" {
 }
 #Create EIP for NAT Gateway
 resource "aws_eip" "nat_gateway_eip" {
-  domain     = "vpc"
+  #domain     = "vpc"
   depends_on = [aws_internet_gateway.internet_gateway]
   tags = {
     Name = "demo_igw_eip"
@@ -136,7 +136,7 @@ resource "aws_instance" "web" {
   instance_type = "t2.micro"
 
   subnet_id              = aws_subnet.public_subnets["public_subnet_1"].id
-  vpc_security_group_ids = ["sg-04b116dfdbf74290f"]
+  vpc_security_group_ids = ["sg-05f231307897eb06b"]
 
   tags = {
     "Terraform" = "True"
