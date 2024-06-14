@@ -6,7 +6,14 @@ Description: Getting Nasty at Terraform
 # Configure the AWS Provider
 provider "aws" {
   region = "us-east-1"
+  default_tags {
+    tags = {
+      Owner      = "Acme"
+      Provisoned = "Terraform"
+    }
+  }
 }
+
 
 locals {
   team        = "api_mgmt_dev"
@@ -333,8 +340,10 @@ resource "aws_instance" "web_server" {
 
 }
 
-resource "aws_instance" "aws_linux" {
-  instance_type = "t2.micro"
-  ami           = "ami-08a0d1e16fc3f61ea"
+#Destroy when you are done with Section 5
+#resource "aws_instance" "aws_linux" {
+# instance_type = "t2.micro"
+#  ami           = "ami-08a0d1e16fc3f61ea"
 
-}
+#}
+
