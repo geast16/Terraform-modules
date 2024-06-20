@@ -1,3 +1,5 @@
+# --- Root/Parent main.tf ----
+
 /*
 Name: IaC for Buildout Terraform Exam
 Description: Getting Nasty at Terraform

@@ -1,3 +1,5 @@
+# ---- Child main.tf file ----
+
 resource "aws_instance" "web" {
   ami                    = var.ami
   instance_type          = var.size
