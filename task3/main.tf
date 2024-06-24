@@ -23,6 +23,12 @@ locals {
   server_name = "ec2-${var.environment}-api-${var.variables_sub_az}"
 }
 
+locals {
+  service_name = "Automation"
+  app_team     = "Cloud Team"
+  createdby    = "terraform"
+}
+
 #Retrieve the list of AZs in the current AWS region
 data "aws_availability_zones" "available" {}
 data "aws_region" "current" {}
@@ -406,9 +412,9 @@ module "autoscaling" {
   image_id      = data.aws_ami.ubuntu.id
   instance_type = "t2.micro"
 
-  tags_as_map = {
-    Name = "Web EC2 Server 2"
-  }
+  # tags_as_map = {
+  #Name = "Web EC2 Server 2"
+  #  }
 
 }
 
@@ -444,5 +450,15 @@ module "vpc" {
     Name        = "VPC from Module"
     Terraform   = "true"
     Environment = "dev"
+  }
+}
+
+# Terraform Resource Block - To Build EC2 instance in Public Subnet
+resource "aws_instance" "web_server_2" {
+  ami           = data.aws_ami.ubuntu.id
+  instance_type = "t2.micro"
+  subnet_id     = aws_subnet.public_subnets["public_subnet_2"].id
+  tags = {
+    Name = "Web EC2 Server"
   }
 }
