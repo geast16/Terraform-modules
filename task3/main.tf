@@ -29,6 +29,18 @@ locals {
   createdby    = "terraform"
 }
 
+locals {
+  # Common tags to be assigned to all resources
+  common_tags = {
+    Name      = local.server_name
+    Owner     = local.team
+    App       = local.application
+    Service   = local.service_name
+    AppTeam   = local.app_team
+    CreatedBy = local.createdby
+  }
+}
+
 #Retrieve the list of AZs in the current AWS region
 data "aws_availability_zones" "available" {}
 data "aws_region" "current" {}
@@ -338,9 +350,7 @@ resource "aws_instance" "web_server" {
     ]
   }
 
-  tags = {
-    Name = "Web EC2 Server"
-  }
+  tags = local.common_tags
 
   lifecycle {
     ignore_changes = [security_groups]
