@@ -1,7 +1,7 @@
-#provider "vault" {
-## address = "http://127.0.0.1:8200"
-#token   = "hvs"
-#}
+provider "vault" {
+  address = "http://127.0.0.1:8200"
+  #token   = "hvs" #token via vault server -dev command
+}
 
 #data "vault_generic_secret" "phone_number" {
 # path = "secret/app"
