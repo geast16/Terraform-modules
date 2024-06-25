@@ -472,3 +472,32 @@ resource "aws_instance" "web_server_2" {
     Name = "Web EC2 Server"
   }
 }
+#May need to delete locals block
+locals {
+  ingress_rules = [{
+    port        = 443
+    description = "Port 443"
+    },
+    {
+      port        = 80
+      description = "Port 80"
+    }
+  ]
+}
+
+resource "aws_security_group" "main" {
+  name   = "core-sg"
+  vpc_id = aws_vpc.vpc.id
+
+  dynamic "ingress" {
+    for_each = var.web_ingress
+
+    content {
+      description = ingress.value.description
+      from_port   = ingress.value.port
+      to_port     = ingress.value.port
+      protocol    = ingress.value.protocol
+      cidr_blocks = ingress.value.cidr_blocks
+    }
+  }
+}
